@@ -1,4 +1,6 @@
-﻿Initialize();
+﻿using System.Diagnostics.CodeAnalysis;
+
+Initialize();
 Thread.Sleep(1_000);
 
 for (int i = 0; i < Screen.WindowWidth; i++)
@@ -56,6 +58,7 @@ internal static class Screen
     public const int WindowWidth = 50;
     public const int WindowHeight = 50;
     private readonly static CoPixel[,] _backBuffer = new CoPixel[WindowWidth, WindowHeight];
+    private readonly static CoPixel[,] _frontBuffer = new CoPixel[WindowWidth, WindowHeight];
 
     //have an event/trigger like wait, when smne call DrawPixel , updte screen is triggered, otherwise no need for constant screen redrawing
 
@@ -66,7 +69,14 @@ internal static class Screen
             for (int j = 0; j < Screen.WindowHeight; j++)
             {
                 var backBufferValue = _backBuffer[i, j];
-                UpdateCoPixelOnScreen(i, j, backBufferValue);
+                var frontBufferValue = _frontBuffer[i, j];
+
+                //boxing — implement IEquatable<T> to avoid
+                if (!frontBufferValue.Equals(backBufferValue))
+                {
+                    _frontBuffer[i, j] = backBufferValue;
+                    UpdateCoPixelOnScreen(i, j, backBufferValue);
+                }
             }
         }
     }
