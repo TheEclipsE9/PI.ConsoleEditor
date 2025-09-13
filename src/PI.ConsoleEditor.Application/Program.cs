@@ -1,19 +1,17 @@
-﻿const int WindowWidth = 50;
-const int WindowHight = 50;
+﻿Initialize();
+Thread.Sleep(1_000);
 
-Initialize();
-Thread.Sleep(10_000);
-
-for (int i = 0; i < 50; i++)
+for (int i = 0; i < Screen.WindowWidth; i++)
 {
-    for (int j = 0; j < 50; j++)
+    for (int j = 0; j < Screen.WindowHeight; j++)
     {
-        SpecialMethods.DrawPixel(i, j, ConsoleColor.Blue);
+        Screen.DrawLowerHalfBlock(i, j, coPixelColor: ConsoleColor.Blue, bgColor: ConsoleColor.Green);
     }
 }
 
 while (true)
 {
+    Screen.UpdateScreen();
     if (Console.ReadKey().Key == ConsoleKey.E)
     {
         break;
@@ -27,7 +25,7 @@ void Initialize()
 {
     Console.Clear();
     Console.CursorVisible = false;
-    Console.SetWindowSize(WindowWidth, WindowHight);
+    Console.SetWindowSize(Screen.WindowWidth, Screen.WindowHeight);
 }
 
 void Terminate()
@@ -35,26 +33,84 @@ void Terminate()
     Console.Clear();
 }
 
-internal static class SpecialSymbols
+public struct CoPixel
 {
-    public static char SolidPixel = '\u2588';
+    private char _value;
+    private ConsoleColor _coPixelColor;
+    private ConsoleColor _bgColor;
+
+    public char Value => _value;
+    public ConsoleColor CoPixelColor => _coPixelColor;
+    public ConsoleColor BgColor => _bgColor;
+
+    public CoPixel(char value, ConsoleColor coPixelColor, ConsoleColor bgColor)
+    {
+        _value = value;
+        _coPixelColor = coPixelColor;
+        _bgColor = bgColor;
+    }
 }
 
-internal static class SpecialMethods
+internal static class Screen
 {
-    public static void DrawPixel(int left, int top, ConsoleColor color)
-    {
-        if (left < 0 || left > 50) throw new ArgumentException("Out of width");
-        if (top < 0 || top > 50) throw new ArgumentException("Out of hight");
+    public const int WindowWidth = 50;
+    public const int WindowHeight = 50;
+    private readonly static CoPixel[,] _backBuffer = new CoPixel[WindowWidth, WindowHeight];
 
+    //have an event/trigger like wait, when smne call DrawPixel , updte screen is triggered, otherwise no need for constant screen redrawing
+
+    public static void UpdateScreen()
+    {
+        for (int i = 0; i < Screen.WindowWidth; i++)
+        {
+            for (int j = 0; j < Screen.WindowHeight; j++)
+            {
+                var backBufferValue = _backBuffer[i, j];
+                UpdateCoPixelOnScreen(i, j, backBufferValue);
+            }
+        }
+    }
+
+    public static void DrawBlock(int left, int top, ConsoleColor coPixelColor, ConsoleColor bgColor)
+    {
+        if (left < 0 || left >= Screen.WindowWidth) throw new ArgumentException("Out of width");
+        if (top < 0 || top >= Screen.WindowHeight) throw new ArgumentException("Out of height");
+
+        var newCoPixel = new CoPixel(SpecialSymbols.SolidBlcok, coPixelColor: coPixelColor, bgColor: bgColor);
+
+        _backBuffer[left, top] = newCoPixel;
+    }
+
+    public static void DrawLowerHalfBlock(int left, int top, ConsoleColor coPixelColor, ConsoleColor bgColor)
+    {
+        if (left < 0 || left >= Screen.WindowWidth) throw new ArgumentException("Out of width");
+        if (top < 0 || top >= Screen.WindowHeight) throw new ArgumentException("Out of height");
+
+        var newCoPixel = new CoPixel(SpecialSymbols.SolidLowerHalfBlcok, coPixelColor: coPixelColor, bgColor: bgColor);
+
+        _backBuffer[left, top] = newCoPixel;
+    }
+
+    private static void UpdateCoPixelOnScreen(int left, int top, CoPixel coPixel)
+    {
         var curForegroundColor = Console.ForegroundColor;
+        var curBackgroundColor = Console.BackgroundColor;
         var curCursorPosition = Console.GetCursorPosition();
 
-        Console.ForegroundColor = color;
+        Console.ForegroundColor = coPixel.CoPixelColor;
+        Console.BackgroundColor = coPixel.BgColor;
         Console.SetCursorPosition(left, top);
-        Console.Write(SpecialSymbols.SolidPixel);
+        Console.Write(coPixel.Value);
 
         Console.ForegroundColor = curForegroundColor;
+        Console.BackgroundColor = curBackgroundColor;
         Console.SetCursorPosition(curCursorPosition.Left, curCursorPosition.Top);
     }
+}
+
+internal static class SpecialSymbols
+{
+    public static char SolidBlcok = '\u2588';
+    public static char SolidLowerHalfBlcok = '\u2584';
+    public static char SolidUpperHalfBlcok = '\u2580';
 }
