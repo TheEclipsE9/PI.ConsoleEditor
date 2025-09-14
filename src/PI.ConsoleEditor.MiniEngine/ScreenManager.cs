@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 namespace PI.ConsoleEditor.MiniEngine;
 
@@ -30,8 +31,8 @@ public class ScreenManager
     private void Initialize()
     {
         Console.Clear();
-        Console.CursorVisible = false;
-        Console.SetWindowSize(Rows, Columns);
+        Console.CursorVisible = true;
+        Console.SetWindowSize(Columns, Rows);
     }
 
     public void DrawBlock(int row, int column, ConsoleColor coPixelColor, ConsoleColor bgColor)
@@ -81,6 +82,7 @@ public class Screen
             return;
         }
 
+        Logger.Log("UpdateScreen");
         for (int i = 0; i < _rows; i++)
         {
             for (int j = 0; j < _columns; j++)
@@ -107,7 +109,7 @@ public class Screen
 
         Console.ForegroundColor = coPixel.CoPixelColor;
         Console.BackgroundColor = coPixel.BgColor;
-        Console.SetCursorPosition(row, column);
+        Console.SetCursorPosition(column, row);
         Console.Write(coPixel.Value);
 
         Console.ForegroundColor = curForegroundColor;
