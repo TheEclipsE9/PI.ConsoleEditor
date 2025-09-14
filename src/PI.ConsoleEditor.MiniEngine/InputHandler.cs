@@ -16,15 +16,15 @@ public class InputHandler
     {
         Task.Run(() =>
         {
-            while (!GlobalState.IsApplicationCloseRequested)
+            while (!ApplicationLifecycle.Instance.IsApplicationCloseRequested)
             {
                 if (Console.KeyAvailable)
                 {
                     var key = Console.ReadKey(true).Key; // true = don’t echo
                     switch (key)
                     {
-                        case ConsoleKey.E:
-                            Logger.Log("ConsoleKey.E pressed");
+                        case ConsoleKey.Q:
+                            Logger.Log("ConsoleKey.Q pressed");
                             _eventQueue.Enqueue(new CustomEvent(EventType.ApplicationClose));
                             return;
                         case ConsoleKey.D:

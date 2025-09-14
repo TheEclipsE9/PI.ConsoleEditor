@@ -19,8 +19,7 @@ public class CustomEventHandler
     {
         Task.Run(() =>
         {
-            bool isApplicationCloseRequested = false;
-            while (!isApplicationCloseRequested)
+            while (!ApplicationLifecycle.Instance.IsApplicationCloseRequested)
             {
                 var result = _eventQueue.Dequeue();
 
@@ -35,8 +34,7 @@ public class CustomEventHandler
                     case EventType.None:
                         break;
                     case EventType.ApplicationClose:
-                        isApplicationCloseRequested = true;
-                        GlobalState.RequestApplicationClose();
+                        ApplicationLifecycle.Instance.Close();
                         return;
                 }
             }

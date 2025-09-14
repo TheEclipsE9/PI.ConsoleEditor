@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PI.ConsoleEditor.Application", "PI.ConsoleEditor.Application\PI.ConsoleEditor.Application.csproj", "{8B168182-5A56-47DD-B0EE-92ABE9807D98}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PI.ConsoleEditor.App", "PI.ConsoleEditor.App\PI.ConsoleEditor.App.csproj", "{8B168182-5A56-47DD-B0EE-92ABE9807D98}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PI.ConsoleEditor.MiniEngine", "PI.ConsoleEditor.MiniEngine\PI.ConsoleEditor.MiniEngine.csproj", "{096957DA-A376-4A82-A71C-B20AAB35D594}"
 EndProject
