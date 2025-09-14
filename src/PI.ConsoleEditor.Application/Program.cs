@@ -11,14 +11,41 @@ for (int i = 0; i < Screen.WindowWidth; i++)
     }
 }
 
+int temp = 0;
+int row1 = 25;
+int row2 = 10;
 while (true)
 {
     Screen.UpdateScreen();
-    if (Console.ReadKey().Key == ConsoleKey.E)
+    if (Console.KeyAvailable && Console.ReadKey().Key == ConsoleKey.E)
     {
         break;
     }
-    Thread.Sleep(1_000);
+
+    temp = temp + 1;
+    if (temp == 10)
+    {
+        temp = 0;
+    }
+
+    if (temp % 2 == 0)
+    {
+        for (int c = 10; c < 20; c++)
+        {
+            Screen.DrawBlock(c, row1, ConsoleColor.Black, ConsoleColor.Black);
+            Screen.DrawBlock(c, row2, ConsoleColor.Black, ConsoleColor.Black);
+        }
+    }
+    else
+    {
+        for (int c = 10; c < 20; c++)
+        {
+            Screen.DrawLowerHalfBlock(c, row1, coPixelColor: ConsoleColor.Blue, bgColor: ConsoleColor.Green);
+            Screen.DrawLowerHalfBlock(c, row2, coPixelColor: ConsoleColor.Blue, bgColor: ConsoleColor.Green);
+        }
+    }
+
+    Thread.Sleep(500);
 }
 
 Terminate();
@@ -61,9 +88,15 @@ internal static class Screen
     private readonly static CoPixel[,] _frontBuffer = new CoPixel[WindowWidth, WindowHeight];
 
     //have an event/trigger like wait, when smne call DrawPixel , updte screen is triggered, otherwise no need for constant screen redrawing
+    private static bool _needToUpdateScreen = true;
 
     public static void UpdateScreen()
     {
+        if (_needToUpdateScreen == false)
+        {
+            return;
+        }
+
         for (int i = 0; i < Screen.WindowWidth; i++)
         {
             for (int j = 0; j < Screen.WindowHeight; j++)
@@ -79,6 +112,8 @@ internal static class Screen
                 }
             }
         }
+
+        _needToUpdateScreen = false;
     }
 
     public static void DrawBlock(int left, int top, ConsoleColor coPixelColor, ConsoleColor bgColor)
@@ -88,7 +123,7 @@ internal static class Screen
 
         var newCoPixel = new CoPixel(SpecialSymbols.SolidBlcok, coPixelColor: coPixelColor, bgColor: bgColor);
 
-        _backBuffer[left, top] = newCoPixel;
+        DrawCoPixel(left, top, newCoPixel);
     }
 
     public static void DrawLowerHalfBlock(int left, int top, ConsoleColor coPixelColor, ConsoleColor bgColor)
@@ -98,7 +133,13 @@ internal static class Screen
 
         var newCoPixel = new CoPixel(SpecialSymbols.SolidLowerHalfBlcok, coPixelColor: coPixelColor, bgColor: bgColor);
 
-        _backBuffer[left, top] = newCoPixel;
+        DrawCoPixel(left, top, newCoPixel);
+    }
+
+    private static void DrawCoPixel(int left, int top, CoPixel coPixel)
+    {
+        _backBuffer[left, top] = coPixel;
+        _needToUpdateScreen = true;
     }
 
     private static void UpdateCoPixelOnScreen(int left, int top, CoPixel coPixel)
