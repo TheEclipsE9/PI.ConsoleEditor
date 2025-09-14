@@ -5,6 +5,7 @@ namespace PI.ConsoleEditor.MiniEngine;
 
 public class ScreenManager
 {
+    private readonly AutoResetEvent _updateSignal = new AutoResetEvent(false);
     private readonly Screen _screen;
 
     public (int Rows, int Columns) ScreenDimensions => (_screen.Rows, _screen.Columns);
@@ -13,7 +14,7 @@ public class ScreenManager
 
     public ScreenManager(int rows, int columns)
     {
-        _screen = new Screen(rows, columns);
+        _screen = new Screen(rows, columns, _updateSignal);
     }
 
     public void Run()
@@ -21,9 +22,9 @@ public class ScreenManager
         Initialize();
         Task.Run(() =>
         {
-            while (true)
+            while (!ApplicationLifecycle.Instance.IsApplicationCloseRequested)
             {
-                //Note: Can event signal when need update
+                _updateSignal.WaitOne();
                 _screen.UpdateScreen();
             }
         });
@@ -64,8 +65,9 @@ public class Screen
     private CoPixel[,] _frontBuffer;
 
     private bool _needToUpdateScreen;
+    private readonly AutoResetEvent _updateSignal;
 
-    public Screen(int rows, int columns)
+    public Screen(int rows, int columns, AutoResetEvent updateSignal)
     {
         _rows = rows;
         _columns = columns;
@@ -74,6 +76,7 @@ public class Screen
         _frontBuffer = new CoPixel[rows, columns];
 
         _needToUpdateScreen = true;
+        _updateSignal = updateSignal;
     }
 
     public void UpdateScreen()
@@ -124,5 +127,6 @@ public class Screen
 
         _backBuffer[row, column] = coPixel;
         _needToUpdateScreen = true;
+        _updateSignal.Set();
     }
 }

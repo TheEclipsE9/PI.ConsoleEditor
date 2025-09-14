@@ -18,7 +18,7 @@ public class InputHandler
         {
             while (!ApplicationLifecycle.Instance.IsApplicationCloseRequested)
             {
-                var key = Console.ReadKey(true).Key; // true = don’t echo
+                var key = Console.ReadKey(true).Key;
                 switch (key)
                 {
                     case ConsoleKey.Q:
