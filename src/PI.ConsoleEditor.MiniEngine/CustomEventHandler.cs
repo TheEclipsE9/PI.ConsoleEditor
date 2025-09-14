@@ -21,7 +21,7 @@ public class CustomEventHandler
         {
             while (!ApplicationLifecycle.Instance.IsApplicationCloseRequested)
             {
-                var result = _eventQueue.Dequeue();
+                var result = _eventQueue.DequeueOrWait();
 
                 switch (result.EventType)
                 {

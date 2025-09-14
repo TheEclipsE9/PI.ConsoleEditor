@@ -23,6 +23,7 @@ public class ScreenManager
         {
             while (true)
             {
+                //Note: Can event signal when need update
                 _screen.UpdateScreen();
             }
         });

@@ -11,6 +11,7 @@ public static class Logger
 
     public static void Log(string message)
     {
+        //Note: consider spliting into layout and have log in right layout
         lock (_lock)
         {
             File.AppendAllLines(LogFilePath, new string[] { message });

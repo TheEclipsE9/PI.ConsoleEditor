@@ -8,28 +8,25 @@ namespace PI.ConsoleEditor.MiniEngine;
 public class EventQueue
 {
     //ToDo: singleton
+    //ToDo: use Channel<T> for async
+    //Note: try EventWaitHandle to prevent busy waiting, when need communication between threads
 
-    private ConcurrentQueue<CustomEvent> _events;
+    private BlockingCollection<CustomEvent> _events;
 
     public EventQueue()
     {
-        _events = new ConcurrentQueue<CustomEvent>();
+        _events = new BlockingCollection<CustomEvent>();
     }
 
-    public void Enqueue(CustomEvent newEvent)
+    public void EnqueueOrWait(CustomEvent newEvent)
     {
         Logger.Log("Enqueue");
-        _events.Enqueue(newEvent);
+        _events.Add(newEvent);
     }
 
-    public CustomEvent Dequeue()
+    public CustomEvent DequeueOrWait()
     {
-        if (_events.TryDequeue(out CustomEvent result))
-        {
-            Logger.Log("Dequeue");
-            return result;
-        }
-
-        return CustomEvent.NoneEvent;
+        Logger.Log("Dequeue");
+        return _events.Take();
     }
 }
