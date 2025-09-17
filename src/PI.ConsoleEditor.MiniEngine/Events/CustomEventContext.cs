@@ -1,6 +1,6 @@
 using System;
 
-namespace PI.ConsoleEditor.MiniEngine;
+namespace PI.ConsoleEditor.MiniEngine.Events;
 
 public interface ICustomEventContext { }
 public class LogEventContext : ICustomEventContext

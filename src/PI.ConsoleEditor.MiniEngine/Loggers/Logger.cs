@@ -1,10 +1,10 @@
-namespace PI.ConsoleEditor.MiniEngine;
+namespace PI.ConsoleEditor.MiniEngine.Loggers;
 
-public class Logger
+public class LoggerWrap
 {
     private readonly ILogger _logger;
 
-    public Logger(ILogger logger)
+    public LoggerWrap(ILogger logger)
     {
         _logger = logger;
     }

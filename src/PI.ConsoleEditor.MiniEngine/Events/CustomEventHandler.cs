@@ -1,4 +1,7 @@
-namespace PI.ConsoleEditor.MiniEngine;
+using PI.ConsoleEditor.MiniEngine.Loggers;
+using PI.ConsoleEditor.MiniEngine.Screens;
+
+namespace PI.ConsoleEditor.MiniEngine.Events;
 
 public class CustomEventHandler
 {

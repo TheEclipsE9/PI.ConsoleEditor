@@ -1,4 +1,6 @@
-namespace PI.ConsoleEditor.MiniEngine;
+using PI.ConsoleEditor.MiniEngine.Events;
+
+namespace PI.ConsoleEditor.MiniEngine.Loggers;
 
 public class ScreenLogger : ILogger
 {

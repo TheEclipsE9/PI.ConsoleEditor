@@ -1,6 +1,4 @@
-using System;
-
-namespace PI.ConsoleEditor.MiniEngine;
+namespace PI.ConsoleEditor.MiniEngine.Screens;
 
 public struct CoPixel
 {

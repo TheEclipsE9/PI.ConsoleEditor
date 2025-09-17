@@ -1,4 +1,6 @@
-namespace PI.ConsoleEditor.MiniEngine;
+using PI.ConsoleEditor.MiniEngine.Loggers;
+
+namespace PI.ConsoleEditor.MiniEngine.Screens;
 
 public class ScreenManager
 {

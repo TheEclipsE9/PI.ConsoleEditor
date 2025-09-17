@@ -1,4 +1,4 @@
-namespace PI.ConsoleEditor.MiniEngine;
+namespace PI.ConsoleEditor.MiniEngine.Loggers;
 
 public class FileLogger : ILogger
 {
