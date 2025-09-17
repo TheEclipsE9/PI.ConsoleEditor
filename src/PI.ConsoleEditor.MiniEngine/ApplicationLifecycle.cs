@@ -38,7 +38,6 @@ public class ApplicationLifecycle
     public void Close()
     {
         _isApplicationCloseRequested = true;
-        Logger.Log("Close");
         _closeCompletionSource.TrySetResult(true);
     }
 }

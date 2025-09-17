@@ -2,19 +2,22 @@ using System;
 
 namespace PI.ConsoleEditor.MiniEngine;
 
-public static class Logger
+public class Logger
 {
-    private static readonly string LogFolderPath = Directory.GetCurrentDirectory();
-    private static readonly string LogFilePath = Path.Combine(LogFolderPath, "Logs.txt");
+    private readonly ILogger _logger;
 
-    private static object _lock = new object();
-
-    public static void Log(string message)
+    public Logger(ILogger logger)
     {
-        //Note: consider spliting into layout and have log in right layout
-        lock (_lock)
-        {
-            File.AppendAllLines(LogFilePath, new string[] { message });
-        }
+        _logger = logger;
     }
+
+    public void Log(string message)
+    {
+        _logger.Log(message);
+    }
+}
+
+public interface ILogger
+{
+    void Log(string message);
 }

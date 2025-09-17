@@ -20,13 +20,11 @@ public class EventQueue
 
     public void EnqueueOrWait(CustomEvent newEvent)
     {
-        Logger.Log("Enqueue");
         _events.Add(newEvent);
     }
 
     public CustomEvent DequeueOrWait()
     {
-        Logger.Log("Dequeue");
         return _events.Take();
     }
 }
