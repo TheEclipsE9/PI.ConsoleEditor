@@ -11,14 +11,13 @@ public class ScreenManager
     public int Rows => _screen.Rows;
     public int Columns => _screen.Columns;
 
-    public ScreenManager(int rows, int columns, ILogger logger)
+    public ScreenManager(int rows, int columns, ILogger logger, bool debugMode)
     {
-        _screen = new Screen(rows, columns, _updateSignal, logger);
+        _screen = new Screen(rows, columns, _updateSignal, logger, debugMode);
     }
 
     public void Run()
     {
-        Initialize();
         Task.Run(() =>
         {
             while (!ApplicationLifecycle.Instance.IsApplicationCloseRequested)
@@ -27,13 +26,6 @@ public class ScreenManager
                 _screen.UpdateScreen();
             }
         });
-    }
-
-    private void Initialize()
-    {
-        Console.Clear();
-        Console.CursorVisible = true;
-        Console.SetWindowSize(Columns, Rows);
     }
 
     public void DrawBlock(int row, int column, ConsoleColor coPixelColor, ConsoleColor bgColor)

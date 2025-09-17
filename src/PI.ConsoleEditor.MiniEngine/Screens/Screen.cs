@@ -17,8 +17,14 @@ public class Screen
     private readonly AutoResetEvent _updateSignal;
     private readonly ILogger _logger;
 
-    public Screen(int rows, int columns, AutoResetEvent updateSignal, ILogger logger)
+    public Screen(int rows, int columns, AutoResetEvent updateSignal, ILogger logger, bool debugMode = false)
     {
+        if (debugMode)
+        {
+            rows++;
+            columns++;
+        }
+
         _rows = rows;
         _columns = columns;
 
@@ -28,6 +34,36 @@ public class Screen
         _needToUpdateScreen = true;
         _updateSignal = updateSignal;
         _logger = logger;
+
+        Initialize(debugMode);
+    }
+
+    private void Initialize(bool debugMode)
+    {
+        Console.Clear();
+        Console.CursorVisible = true;
+        Console.SetWindowSize(Columns, Rows);
+
+        if (debugMode)
+        {
+            for (int column = 1; column < Columns; column++)
+            {
+                var fgColor = ConsoleColor.White;
+                if (column % 10 == 0) fgColor = ConsoleColor.Red;
+
+                _backBuffer[0, column] = new CoPixel((char)('0' + column % 10), fgColor, ConsoleColor.Black);
+            }
+
+            for (int row = 1; row < Rows; row++)
+            {
+                var fgColor = ConsoleColor.White;
+                if (row % 10 == 0) fgColor = ConsoleColor.Red;
+
+                _backBuffer[row, 0] = new CoPixel((char)('0' + row % 10), fgColor, ConsoleColor.Black);
+            }
+        }
+
+        UpdateScreen();
     }
 
     public void UpdateScreen()

@@ -26,7 +26,7 @@ public class Application
 
     private void OnStart()
     {
-        ScreenManager screenManager = new ScreenManager(50, 75, _logger);
+        ScreenManager screenManager = new ScreenManager(50, 75, _logger, debugMode: true);
         screenManager.Run();
 
         InputHandler inputHandler = new InputHandler(_eventQueue, _logger);
