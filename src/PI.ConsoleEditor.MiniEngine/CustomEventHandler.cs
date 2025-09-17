@@ -1,9 +1,5 @@
-using System;
-using System.Diagnostics;
-
 namespace PI.ConsoleEditor.MiniEngine;
 
-//ToDo: naming
 public class CustomEventHandler
 {
     private readonly EventQueue _eventQueue;
@@ -29,30 +25,27 @@ public class CustomEventHandler
 
                 switch (customEvent.EventType)
                 {
-                    case EventType.Clear:
+                    case CustomEventType.Clear:
                         HandleClear();
                         break;
-                    case EventType.Draw:
+                    case CustomEventType.Draw:
                         HandleDraw();
                         break;
-                    case EventType.None:
+                    case CustomEventType.None:
                         break;
-                    case EventType.Log:
+                    case CustomEventType.Log:
                         HandleLog(customEvent);
                         break;
-                    case EventType.ApplicationClose:
+                    case CustomEventType.ApplicationClose:
                         ApplicationLifecycle.Instance.Close();
                         return;
                 }
             }
-
-            //_logger.Log("End CustomEventHandler");
         });
     }
 
     private void HandleDraw()
     {
-        //_logger.Log("Handle draw");
         int row1 = 25;
         int row2 = 10;
         for (int c = 10; c < 20; c++)
@@ -64,7 +57,6 @@ public class CustomEventHandler
 
     private void HandleClear()
     {
-        //_logger.Log("Handle clear");
         for (int i = 0; i < _screenManager.Rows; i++)
         {
             for (int j = 0; j < _screenManager.Columns - 25; j++)

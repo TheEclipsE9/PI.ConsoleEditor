@@ -4,27 +4,8 @@ namespace PI.ConsoleEditor.MiniEngine;
 
 public class ApplicationLifecycle
 {
-    private static ApplicationLifecycle _instance;
-
-    //private static readonly Lazy<ApplicationLifecycle> _instance = new Lazy<ApplicationLifecycle>(() => new ApplicationLifecycle());
-    private static readonly Object _lock = new Object();
-    public static ApplicationLifecycle Instance
-    {
-        get
-        {
-            if (_instance is null)
-            {
-                lock (_lock)
-                {
-                    if (_instance is null)
-                    {
-                        _instance = new ApplicationLifecycle();
-                    }
-                }
-            }
-            return _instance;
-        }
-    }
+    private static readonly Lazy<ApplicationLifecycle> _instance = new Lazy<ApplicationLifecycle>(() => new ApplicationLifecycle());
+    public static ApplicationLifecycle Instance = _instance.Value;
 
     private ApplicationLifecycle() { }
 

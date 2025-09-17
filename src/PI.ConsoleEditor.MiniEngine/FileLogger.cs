@@ -1,5 +1,3 @@
-using System;
-
 namespace PI.ConsoleEditor.MiniEngine;
 
 public class FileLogger : ILogger

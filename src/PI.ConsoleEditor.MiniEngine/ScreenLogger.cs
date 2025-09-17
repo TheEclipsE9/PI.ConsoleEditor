@@ -1,5 +1,3 @@
-using System;
-
 namespace PI.ConsoleEditor.MiniEngine;
 
 public class ScreenLogger : ILogger
@@ -13,6 +11,6 @@ public class ScreenLogger : ILogger
 
     public void Log(string message)
     {
-        _eventQueue.EnqueueOrWait(new CustomEvent(EventType.Log, new LogEventContext(message)));
+        _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.Log, new LogEventContext(message)));
     }
 }

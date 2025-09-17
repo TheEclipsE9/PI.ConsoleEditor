@@ -2,11 +2,7 @@ using System;
 
 namespace PI.ConsoleEditor.MiniEngine;
 
-public interface ICustomEventContext
-{
-
-}
-
+public interface ICustomEventContext { }
 public class LogEventContext : ICustomEventContext
 {
     private string _message;

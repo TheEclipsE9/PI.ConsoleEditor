@@ -1,6 +1,3 @@
-using System;
-using System.Threading.Tasks;
-
 namespace PI.ConsoleEditor.MiniEngine;
 
 public class Application
@@ -8,23 +5,14 @@ public class Application
     private readonly EventQueue _eventQueue;
     private readonly ILogger _logger;
 
-    private int w;
-    private int h;
-
-
     public Application()
     {
         _eventQueue = new EventQueue();
         _logger = new ScreenLogger(_eventQueue);
-
-        w = Console.WindowWidth;
-        h = Console.WindowHeight;
     }
 
     public async Task Run()
     {
-        //_logger.Log("Run");
-
         OnStart();
 
         await ApplicationLifecycle.Instance.WaitForApplicationClose();
@@ -34,7 +22,6 @@ public class Application
 
     private void OnStart()
     {
-        //_logger.Log("OnStart");
         ScreenManager screenManager = new ScreenManager(50, 75, _logger);
         screenManager.Run();
 
@@ -48,10 +35,7 @@ public class Application
 
     private void OnClose()
     {
-        //_logger.Log("OnClose");
         Console.CursorVisible = true;
-        Console.WindowWidth = w;
-        Console.WindowHeight = h;
         Console.Clear();
     }
 }

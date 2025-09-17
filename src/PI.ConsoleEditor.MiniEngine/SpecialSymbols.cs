@@ -1,5 +1,3 @@
-using System;
-
 namespace PI.ConsoleEditor.MiniEngine;
 
 internal static class SpecialSymbols

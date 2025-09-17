@@ -1,6 +1,3 @@
-using System;
-using System.Diagnostics;
-
 namespace PI.ConsoleEditor.MiniEngine;
 
 public class InputHandler
@@ -25,19 +22,19 @@ public class InputHandler
                 {
                     case ConsoleKey.Q:
                         _logger.Log("ConsoleKey.Q pressed");
-                        _eventQueue.EnqueueOrWait(new CustomEvent(EventType.ApplicationClose));
+                        _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.ApplicationClose));
                         return;
                     case ConsoleKey.D:
                         _logger.Log("ConsoleKey.D pressed");
-                        _eventQueue.EnqueueOrWait(new CustomEvent(EventType.Draw));
+                        _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.Draw));
                         break;
                     case ConsoleKey.C:
                         _logger.Log("ConsoleKey.C pressed");
-                        _eventQueue.EnqueueOrWait(new CustomEvent(EventType.Clear));
+                        _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.Clear));
                         break;
                     case ConsoleKey.L:
                         _logger.Log("ConsoleKey.C pressed");
-                        _eventQueue.EnqueueOrWait(new CustomEvent(EventType.Log, new LogEventContext("ConsoleKey.L pressed")));
+                        _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.Log, new LogEventContext("ConsoleKey.L pressed")));
                         break;
                 }
             }

@@ -1,6 +1,3 @@
-using System;
-using System.Diagnostics;
-
 namespace PI.ConsoleEditor.MiniEngine;
 
 public class ScreenManager
