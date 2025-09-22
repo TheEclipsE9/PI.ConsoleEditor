@@ -5,13 +5,16 @@ namespace PI.ConsoleEditor.MiniEngine;
 public class ApplicationLifecycle
 {
     private static readonly Lazy<ApplicationLifecycle> _instance = new Lazy<ApplicationLifecycle>(() => new ApplicationLifecycle());
-    public static ApplicationLifecycle Instance = _instance.Value;
+    public static readonly ApplicationLifecycle Instance = _instance.Value;
 
-    private ApplicationLifecycle() { }
+    private ApplicationLifecycle()
+    {
+        _closeCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+    }
 
-    private readonly TaskCompletionSource<bool> _closeCompletionSource = new TaskCompletionSource<bool>();
+    private readonly TaskCompletionSource<bool> _closeCompletionSource;
 
-    public async Task<bool> WaitForApplicationClose() => await _closeCompletionSource.Task.WaitAsync(CancellationToken.None);
+    public Task<bool> WaitForClose() => _closeCompletionSource.Task;
 
     private volatile bool _isApplicationCloseRequested = false;
     public bool IsApplicationCloseRequested => _isApplicationCloseRequested;
