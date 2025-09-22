@@ -10,7 +10,7 @@ public class CustomEvent
     public CustomEventType EventType => _eventType;
     public ICustomEventContext? EventContext => _eventContext;
 
-    private static CustomEvent _noneEvent = new CustomEvent(CustomEventType.None);
+    private static readonly CustomEvent _noneEvent = new CustomEvent(CustomEventType.None);
     public static CustomEvent NoneEvent => _noneEvent;
 
     public CustomEvent(CustomEventType eventType, ICustomEventContext? eventContext = null)

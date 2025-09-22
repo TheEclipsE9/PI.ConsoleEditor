@@ -18,6 +18,8 @@ public class ScreenManager
 
     public void Run()
     {
+        //Task.Run returns a task that isn’t awaited.
+        //Could store it in a field and await it during shutdown for graceful cleanup.
         Task.Run(() =>
         {
             while (!ApplicationLifecycle.Instance.IsApplicationCloseRequested)

@@ -15,6 +15,8 @@ public class InputHandler
 
     public void Run()
     {
+        //Task.Run returns a task that isn’t awaited.
+        //Could store it in a field and await it during shutdown for graceful cleanup.
         Task.Run(() =>
         {
             while (!ApplicationLifecycle.Instance.IsApplicationCloseRequested)
@@ -35,7 +37,7 @@ public class InputHandler
                         _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.Clear));
                         break;
                     case ConsoleKey.L:
-                        _logger.Log("ConsoleKey.C pressed");
+                        _logger.Log("ConsoleKey.L pressed");
                         _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.Log, new LogEventContext("ConsoleKey.L pressed")));
                         break;
                 }

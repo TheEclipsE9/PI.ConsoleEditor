@@ -1,5 +1,6 @@
 namespace PI.ConsoleEditor.MiniEngine.Screens;
 
+//implement IEquatable<CoPixel> to avoid boxing on equals
 public struct CoPixel
 {
     private char _value;
