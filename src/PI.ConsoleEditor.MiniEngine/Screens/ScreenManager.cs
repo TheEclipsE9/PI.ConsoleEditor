@@ -1,5 +1,3 @@
-using PI.ConsoleEditor.MiniEngine.Loggers;
-
 namespace PI.ConsoleEditor.MiniEngine.Screens;
 
 public class ScreenManager
@@ -11,9 +9,9 @@ public class ScreenManager
     public int Rows => _screen.Rows;
     public int Columns => _screen.Columns;
 
-    public ScreenManager(int rows, int columns, ILogger logger, bool debugMode)
+    public ScreenManager(int rows, int columns, bool debugMode)
     {
-        _screen = new Screen(rows, columns, _updateSignal, logger, debugMode);
+        _screen = new Screen(rows, columns, _updateSignal, debugMode);
     }
 
     public void Run()
