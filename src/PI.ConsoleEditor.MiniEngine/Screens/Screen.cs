@@ -1,5 +1,3 @@
-using PI.ConsoleEditor.MiniEngine.Loggers;
-
 namespace PI.ConsoleEditor.MiniEngine.Screens;
 
 public class Screen
@@ -15,9 +13,8 @@ public class Screen
 
     private bool _needToUpdateScreen;
     private readonly AutoResetEvent _updateSignal;
-    private readonly ILogger _logger;
 
-    public Screen(int rows, int columns, AutoResetEvent updateSignal, ILogger logger, bool debugMode = false)
+    public Screen(int rows, int columns, AutoResetEvent updateSignal, bool debugMode = false)
     {
         if (debugMode)
         {
@@ -33,7 +30,6 @@ public class Screen
 
         _needToUpdateScreen = true;
         _updateSignal = updateSignal;
-        _logger = logger;
 
         Initialize(debugMode);
     }
@@ -73,7 +69,6 @@ public class Screen
             return;
         }
 
-        _logger.Log("UpdateScreen");
         for (int i = 0; i < _rows; i++)
         {
             for (int j = 0; j < _columns; j++)

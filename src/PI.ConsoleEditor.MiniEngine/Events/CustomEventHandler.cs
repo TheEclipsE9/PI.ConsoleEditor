@@ -1,4 +1,3 @@
-using PI.ConsoleEditor.MiniEngine.Loggers;
 using PI.ConsoleEditor.MiniEngine.Screens;
 
 namespace PI.ConsoleEditor.MiniEngine.Events;
@@ -7,15 +6,11 @@ public class CustomEventHandler
 {
     private readonly EventQueue _eventQueue;
     private readonly ScreenManager _screenManager;
-    private readonly ILogger _logger;
-    private readonly LogPanel _logPanel;
 
-    public CustomEventHandler(EventQueue eventQueue, ScreenManager screenManager, ILogger logger, LogPanel logPanel)
+    public CustomEventHandler(EventQueue eventQueue, ScreenManager screenManager)
     {
         _eventQueue = eventQueue;
         _screenManager = screenManager;
-        _logger = logger;
-        _logPanel = logPanel;
     }
 
     public void Run()
@@ -37,9 +32,6 @@ public class CustomEventHandler
                         HandleDraw();
                         break;
                     case CustomEventType.None:
-                        break;
-                    case CustomEventType.Log:
-                        HandleLog(customEvent);
                         break;
                     case CustomEventType.ApplicationClose:
                         ApplicationLifecycle.Instance.Close();
@@ -69,14 +61,5 @@ public class CustomEventHandler
                 _screenManager.DrawLowerHalfBlock(i, j, coPixelColor: ConsoleColor.Blue, bgColor: ConsoleColor.Green);
             }
         }
-    }
-
-    private void HandleLog(CustomEvent customEvent)
-    {
-        var context = customEvent.EventContext as LogEventContext;
-
-        if (context is null) return;
-
-        _logPanel.Log(context.Message);
     }
 }
