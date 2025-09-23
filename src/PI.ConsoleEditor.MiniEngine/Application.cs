@@ -11,6 +11,14 @@ public class Application
 
     public async Task Run()
     {
+        var globalEventQueue = new EventQueue();
+
+        var inputHandler = new InputHandler(globalEventQueue);
+        inputHandler.Run();
+
+        var eventQueueHandler = new EventQueueHandler(globalEventQueue);
+        eventQueueHandler.Run();
+
         await ApplicationLifecycle.Instance.WaitForClose();
     }
 }

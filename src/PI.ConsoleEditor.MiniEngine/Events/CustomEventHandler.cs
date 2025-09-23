@@ -2,15 +2,13 @@ using PI.ConsoleEditor.MiniEngine.Screens;
 
 namespace PI.ConsoleEditor.MiniEngine.Events;
 
-public class CustomEventHandler
+public class EventQueueHandler
 {
     private readonly EventQueue _eventQueue;
-    private readonly ScreenManager _screenManager;
 
-    public CustomEventHandler(EventQueue eventQueue, ScreenManager screenManager)
+    public EventQueueHandler(EventQueue eventQueue)
     {
         _eventQueue = eventQueue;
-        _screenManager = screenManager;
     }
 
     public void Run()
@@ -25,9 +23,6 @@ public class CustomEventHandler
 
                 switch (customEvent.EventType)
                 {
-                    case CustomEventType.Clear:
-                        HandleClear();
-                        break;
                     case CustomEventType.None:
                         break;
                     case CustomEventType.ApplicationClose:
@@ -36,16 +31,5 @@ public class CustomEventHandler
                 }
             }
         });
-    }
-
-    private void HandleClear()
-    {
-        for (int i = 0; i < _screenManager.Rows; i++)
-        {
-            for (int j = 0; j < _screenManager.Columns - 25; j++)
-            {
-                _screenManager.DrawBlock(i, j, coPixelColor: ConsoleColor.White, bgColor: ConsoleColor.Black);
-            }
-        }
     }
 }
