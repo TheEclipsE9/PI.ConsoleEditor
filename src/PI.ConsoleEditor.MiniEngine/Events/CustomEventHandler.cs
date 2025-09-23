@@ -28,9 +28,6 @@ public class CustomEventHandler
                     case CustomEventType.Clear:
                         HandleClear();
                         break;
-                    case CustomEventType.Draw:
-                        HandleDraw();
-                        break;
                     case CustomEventType.None:
                         break;
                     case CustomEventType.ApplicationClose:
@@ -41,24 +38,13 @@ public class CustomEventHandler
         });
     }
 
-    private void HandleDraw()
-    {
-        int row1 = 25;
-        int row2 = 10;
-        for (int c = 10; c < 20; c++)
-        {
-            _screenManager.DrawBlock(row1, c, ConsoleColor.Black, ConsoleColor.Black);
-            _screenManager.DrawBlock(row2, c, ConsoleColor.Black, ConsoleColor.Black);
-        }
-    }
-
     private void HandleClear()
     {
         for (int i = 0; i < _screenManager.Rows; i++)
         {
             for (int j = 0; j < _screenManager.Columns - 25; j++)
             {
-                _screenManager.DrawLowerHalfBlock(i, j, coPixelColor: ConsoleColor.Blue, bgColor: ConsoleColor.Green);
+                _screenManager.DrawBlock(i, j, coPixelColor: ConsoleColor.White, bgColor: ConsoleColor.Black);
             }
         }
     }

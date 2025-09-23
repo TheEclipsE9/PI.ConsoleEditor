@@ -23,9 +23,6 @@ public class InputHandler
                     case ConsoleKey.Q:
                         _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.ApplicationClose));
                         return;
-                    case ConsoleKey.D:
-                        _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.Draw));
-                        break;
                     case ConsoleKey.C:
                         _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.Clear));
                         break;
