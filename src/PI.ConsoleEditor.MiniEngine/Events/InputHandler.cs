@@ -22,7 +22,16 @@ public class InputHandler
                 {
                     case ConsoleKey.Q:
                         _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.ApplicationClose));
-                        return;
+                        break;
+                    case ConsoleKey.R:
+                        _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.FillIn, new FillInEventContext(ConsoleColor.Red)));
+                        break;
+                    case ConsoleKey.G:
+                        _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.FillIn, new FillInEventContext(ConsoleColor.Green)));
+                        break;
+                    case ConsoleKey.B:
+                        _eventQueue.EnqueueOrWait(new CustomEvent(CustomEventType.FillIn, new FillInEventContext(ConsoleColor.Blue)));
+                        break;
                 }
             }
         });

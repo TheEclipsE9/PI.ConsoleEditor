@@ -2,13 +2,19 @@ using PI.ConsoleEditor.MiniEngine.Screens;
 
 namespace PI.ConsoleEditor.MiniEngine.Events;
 
-public class EventQueueHandler
+public class EventQueueDispatcher
 {
     private readonly EventQueue _eventQueue;
+    private Dictionary<CustomEventType, ICustomEventHandler> _eventHandlers;
 
-    public EventQueueHandler(EventQueue eventQueue)
+    public EventQueueDispatcher(EventQueue eventQueue, IEnumerable<(CustomEventType, ICustomEventHandler)> eventHandlers)
     {
         _eventQueue = eventQueue;
+        _eventHandlers = new Dictionary<CustomEventType, ICustomEventHandler>();
+        foreach (var handler in eventHandlers)
+        {
+            _eventHandlers.Add(handler.Item1, handler.Item2);
+        }
     }
 
     public void Run()
@@ -27,7 +33,13 @@ public class EventQueueHandler
                         break;
                     case CustomEventType.ApplicationClose:
                         ApplicationLifecycle.Instance.Close();
-                        return;
+                        break;
+                    case CustomEventType.FillIn:
+                        if (_eventHandlers.TryGetValue(CustomEventType.FillIn, out ICustomEventHandler handler))
+                        {
+                            handler.Handle(customEvent);
+                        }
+                        break;
                 }
             }
         });

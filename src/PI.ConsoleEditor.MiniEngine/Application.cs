@@ -17,7 +17,15 @@ public class Application
         var inputHandler = new InputHandler(globalEventQueue);
         inputHandler.Run();
 
-        var eventQueueHandler = new EventQueueHandler(globalEventQueue);
+        var fillInEventHandler = new FillInEventHandler(screen);
+
+        var handlers = new List<(CustomEventType, ICustomEventHandler)>
+        {
+            (CustomEventType.FillIn, fillInEventHandler)
+        };
+
+
+        var eventQueueHandler = new EventQueueDispatcher(globalEventQueue, handlers);
         eventQueueHandler.Run();
 
         await ApplicationLifecycle.Instance.WaitForClose();

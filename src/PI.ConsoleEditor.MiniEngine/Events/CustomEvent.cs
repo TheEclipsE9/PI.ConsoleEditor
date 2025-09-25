@@ -23,8 +23,6 @@ public class CustomEvent
 public enum CustomEventType
 {
     None,
-    Log,
     ApplicationClose,
-    Draw,
-    Clear,
+    FillIn
 }
