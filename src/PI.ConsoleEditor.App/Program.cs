@@ -17,6 +17,4 @@ var app = new Application();
 //          //rerender panel with mor wider borders
 //      })
 
-Console.WriteLine("Run...");
 await app.Run();
-Console.WriteLine("Close...");

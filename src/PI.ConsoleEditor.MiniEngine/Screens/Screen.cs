@@ -14,7 +14,7 @@ public class Screen
     private bool _needToUpdateScreen;
     private readonly AutoResetEvent _updateSignal;
 
-    public Screen(int rows, int columns, AutoResetEvent updateSignal, bool debugMode = false)
+    public Screen(int rows, int columns, bool debugMode = false)
     {
         if (debugMode)
         {
@@ -29,7 +29,7 @@ public class Screen
         _frontBuffer = new CoPixel[rows, columns];
 
         _needToUpdateScreen = true;
-        _updateSignal = updateSignal;
+        _updateSignal = new AutoResetEvent(false);
 
         Initialize(debugMode);
     }
